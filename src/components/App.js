@@ -37,7 +37,7 @@ function App() {
             onEditAvatar={handleEditAvatarClick}/>
       <Footer/>
 
-      <PopupWithForm title='Редактировать профиль' name='edit-form' isOpen={isEditProfilePopupOpen}
+      <PopupWithForm title='Редактировать профиль' name='edit-form' textBtn='Сохранить' isOpen={isEditProfilePopupOpen}
                      onClose={closeAllPopup}>
         <input className="popup__input popup__input_value_name" name="name" placeholder="Имя"
                type="text" minLength="2"
@@ -50,7 +50,8 @@ function App() {
         <span className="popup__error job-error"></span>
       </PopupWithForm>
 
-      <PopupWithForm title='Новое место' name='add-form' isOpen={isAddPlacePopupOpen} onClose={closeAllPopup}>
+      <PopupWithForm title='Новое место' name='add-form' textBtn='Сохранить' isOpen={isAddPlacePopupOpen}
+                     onClose={closeAllPopup}>
         <input className="popup__input popup__input_value_title" name="title" placeholder="Название" type="text"
                minLength="2" maxLength="30" required/>
         <span className="popup__error title-error"></span>
@@ -60,7 +61,8 @@ function App() {
         <span className="popup__error url-error"></span>
       </PopupWithForm>
 
-      <PopupWithForm title='Обновить аватар' name='avatar-form' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopup}>
+      <PopupWithForm title='Обновить аватар' name='avatar-form' textBtn='Сохранить' isOpen={isEditAvatarPopupOpen}
+                     onClose={closeAllPopup}>
         <input className="popup__input popup__input_value_url" name="url" placeholder="Ссылка" type="url"
                required/>
         <span className="popup__error url-error"></span>
