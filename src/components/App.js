@@ -4,12 +4,14 @@ import Main from "./Main";
 import Footer from "./Footer";
 import {useState} from "react";
 import PopupWithForm from "./PopupWithForm";
+import PopupImage from "./PopupImage";
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState('');
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -23,10 +25,15 @@ function App() {
     setIsEditAvatarPopupOpen(true)
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card)
+  }
+
   function closeAllPopup() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+    setSelectedCard('')
   }
 
   return (
@@ -34,7 +41,8 @@ function App() {
       <Header/>
       <Main onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}/>
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}/>
       <Footer/>
 
       <PopupWithForm title='Редактировать профиль' name='edit-form' textBtn='Сохранить' isOpen={isEditProfilePopupOpen}
@@ -68,13 +76,7 @@ function App() {
         <span className="popup__error url-error"></span>
       </PopupWithForm>
 
-      <div className="popup popup_photo">
-        <figure className="popup__figure">
-          <button aria-label="Close" className="popup__close-button popup__close-button_type_photo"></button>
-          <img className="popup__image" src="#" alt=""/>
-          <figcaption className="popup__caption"></figcaption>
-        </figure>
-      </div>
+      <PopupImage card={selectedCard} onClose={closeAllPopup}/>
 
       <div className="popup popup_delete">
         <div className="popup__container">
@@ -87,19 +89,6 @@ function App() {
         </div>
       </div>
 
-      <template className="template-element">
-        <article className="element">
-          <button className="element__delete-button"></button>
-          <img className="element__image" src="#" alt=""/>
-          <div className="element__info">
-            <h2 className="element__title"></h2>
-            <div className="element__likes">
-              <button className="element__like-button" type="button"></button>
-              <p className="element__like-count"></p>
-            </div>
-          </div>
-        </article>
-      </template>
     </div>
   );
 }
