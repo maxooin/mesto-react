@@ -4,7 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import {useState} from "react";
 import PopupWithForm from "./PopupWithForm";
-import PopupImage from "./PopupImage";
+import ImagePopup from "./ImagePopup";
 
 function App() {
 
@@ -76,7 +76,7 @@ function App() {
         <span className="popup__error url-error"></span>
       </PopupWithForm>
 
-      <PopupImage card={selectedCard} onClose={closeAllPopup}/>
+      <ImagePopup card={selectedCard} onClose={closeAllPopup}/>
 
       <div className="popup popup_delete">
         <div className="popup__container">
