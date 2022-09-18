@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
 
@@ -29,6 +30,17 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card)
+  }
+
+  function handleUpdateUser(item) {
+    api.setUserInfoApi(item.name, item.about)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopup();
+      })
+      .catch((res) => {
+        console.log(res)
+      })
   }
 
   function closeAllPopup() {
@@ -58,27 +70,7 @@ function App() {
               onCardClick={handleCardClick}/>
         <Footer/>
 
-        <PopupWithForm title='Редактировать профиль' name='edit-form' textBtn='Сохранить'
-                       isOpen={isEditProfilePopupOpen}
-                       onClose={closeAllPopup}>
-          <input className="popup__input popup__input_value_name"
-                 name="name"
-                 placeholder="Имя"
-                 type="text"
-                 minLength="2"
-                 maxLength="40"
-                 required/>
-          <span className="popup__error name-error"></span>
-
-          <input className="popup__input popup__input_value_job"
-                 name="job"
-                 placeholder="О себе"
-                 type="text"
-                 minLength="2"
-                 maxLength="200"
-                 required/>
-          <span className="popup__error job-error"></span>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopup} onUpdateUser={handleUpdateUser}/>
 
         <PopupWithForm title='Новое место' name='add-form' textBtn='Сохранить' isOpen={isAddPlacePopupOpen}
                        onClose={closeAllPopup}>
