@@ -7,6 +7,7 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
 
@@ -43,6 +44,17 @@ function App() {
       })
   }
 
+  function handleUpdateAvatar(item) {
+    api.changeAvatar(item)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopup();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   function closeAllPopup() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
@@ -70,9 +82,14 @@ function App() {
               onCardClick={handleCardClick}/>
         <Footer/>
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopup} onUpdateUser={handleUpdateUser}/>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen}
+                          onClose={closeAllPopup}
+                          onUpdateUser={handleUpdateUser}/>
 
-        <PopupWithForm title='Новое место' name='add-form' textBtn='Сохранить' isOpen={isAddPlacePopupOpen}
+        <PopupWithForm title='Новое место'
+                       name='add-form'
+                       textBtn='Сохранить'
+                       isOpen={isAddPlacePopupOpen}
                        onClose={closeAllPopup}>
           <input className="popup__input popup__input_value_title"
                  name="title"
@@ -91,19 +108,16 @@ function App() {
           <span className="popup__error url-error"></span>
         </PopupWithForm>
 
-        <PopupWithForm title='Обновить аватар' name='avatar-form' textBtn='Сохранить' isOpen={isEditAvatarPopupOpen}
-                       onClose={closeAllPopup}>
-          <input className="popup__input popup__input_value_url"
-                 name="url"
-                 placeholder="Ссылка"
-                 type="url"
-                 required/>
-          <span className="popup__error url-error"></span>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
+                         onClose={closeAllPopup}
+                         onUpdateAvatar={handleUpdateAvatar}/>
 
-        <PopupWithForm title='Вы уверены?' name='delete-form' textBtn='Да'/>
+        <PopupWithForm title='Вы уверены?'
+                       name='delete-form'
+                       textBtn='Да'/>
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopup}/>
+        <ImagePopup card={selectedCard}
+                    onClose={closeAllPopup}/>
       </CurrentUserContext.Provider>
     </div>
   );
