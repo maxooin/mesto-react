@@ -63,13 +63,19 @@ function App() {
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   function handleCardDelete(card) {
     api.deleteElement(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 
@@ -92,6 +98,14 @@ function App() {
   }
 
   useEffect(() => {
+    api.getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
     api.getUserInfoApi()
       .then((userProperty) => {
         setCurrentUser(userProperty)
@@ -100,16 +114,6 @@ function App() {
         console.log(err);
       })
   }, [])
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, []);
 
   return (
     <div className="app">
