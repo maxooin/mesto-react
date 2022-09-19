@@ -39,13 +39,13 @@ class Api {
       .then(this._checkResponse);
   }
 
-  addNewElement(title, url) {
+  addNewElement(item) {
     return fetch(`${this._url}cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: title,
-        link: url
+        name: item.name,
+        link: item.link
       })
     })
       .then(this._checkResponse);
